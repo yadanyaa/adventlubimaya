@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Для Даши 💖</title>
+  <style>
+    :root{
+      --bg1:#0b1020;
+      --bg2:#160b2a;
+      --glass: rgba(255,255,255,.08);
+      --glass2: rgba(255,255,255,.12);
+      --stroke: rgba(255,255,255,.16);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 15% 10%, rgba(255,0,122,.22), transparent 55%),
+        radial-gradient(1000px 700px at 85% 15%, rgba(0,217,255,.18), transparent 60%),
+        radial-gradient(900px 700px at 60% 90%, rgba(154,255,136,.10), transparent 60%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    /* aurora */
+    .aurora{
+      position:fixed; inset:-20%;
+      filter: blur(42px);
+      opacity:.65;
+      pointer-events:none;
+      background:
+        conic-gradient(from 180deg at 50% 50%,
+          rgba(255,77,166,.35),
+          rgba(0,214,255,.28),
+          rgba(140,255,198,.22),
+          rgba(255,242,126,.18),
+          rgba(255,77,166,.35)
+        );
+      animation: swirl 18s linear infinite;
+      transform-origin:center;
+      z-index:-2;
+    }
+    @keyframes swirl{
+      0%{transform: rotate(0deg) scale(1.05)}
+      50%{transform: rotate(180deg) scale(1.25)}
+      100%{transform: rotate(360deg) scale(1.05)}
+    }
+
+    /* snow */
+    .snow{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:-1;
+      background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.7) 40%, transparent 41%),
+        radial-gradient(1.5px 1.5px at 30% 80%, rgba(255,255,255,.65) 40%, transparent 41%),
+        radial-gradient(2.2px 2.2px at 55% 35%, rgba(255,255,255,.6) 40%, transparent 41%),
+        radial-gradient(1.8px 1.8px at 70% 60%, rgba(255,255,255,.55) 40%, transparent 41%),
+        radial-gradient(2px 2px at 85% 25%, rgba(255,255,255,.65) 40%, transparent 41%),
+        radial-gradient(1.6px 1.6px at 92% 78%, rgba(255,255,255,.55) 40%, transparent 41%);
+      animation: snowMove 8s linear infinite;
+      opacity:.55;
+    }
+    @keyframes snowMove{ from{transform: translateY(-10px)} to{transform: translateY(70px)} }
+
+    .wrap{ max-width:1100px; margin:0 auto; padding: 26px 18px 70px; }
+
+    header{
+      display:flex; gap:16px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
+      margin-top:6px;
+    }
+    .brand{
+      display:flex; flex-direction:column; gap:6px;
+      padding: 16px 18px;
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      box-shadow: var(--shadow);
+      border-radius: 18px;
+      backdrop-filter: blur(10px);
+      max-width: 720px;
+    }
+    .brand h1{ margin:0; font-size: 22px; letter-spacing:.2px; line-height:1.2; }
+    .brand p{ margin:0; color:var(--muted); font-size: 14.5px; line-height:1.45; }
+
+    .actions{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+
+    button{
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      transition: transform .12s ease, background .2s ease, border-color .2s ease;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      font-weight: 700;
+      font-size: 13.5px;
+      display:flex; align-items:center; gap:8px;
+      user-select:none;
+    }
+    button:hover{transform: translateY(-1px); background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.28)}
+    button:active{transform: translateY(1px)}
+    .btn-primary{
+      background: linear-gradient(135deg, rgba(255,77,166,.35), rgba(0,214,255,.25));
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .gridCard{
+      margin-top:18px;
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      backdrop-filter: blur(10px);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hint{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      margin: 0 0 10px;
+    }
+    .hint .left{ display:flex; gap:10px; align-items:center; color:var(--muted); font-size: 14px; flex-wrap:wrap; }
+    .pill{
+      padding:6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      font-size:12.5px;
+      color: rgba(255,255,255,.80);
+    }
+
+    .grid{ display:grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+    @media (max-width: 940px){ .grid{grid-template-columns: repeat(5,1fr)} }
+    @media (max-width: 760px){ .grid{grid-template-columns: repeat(4,1fr)} }
+    @media (max-width: 560px){ .grid{grid-template-columns: repeat(3,1fr)} }
+
+    .heart{
+      position:relative;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      border-radius: 18px;
+      height: 98px;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; overflow:hidden;
+      transition: transform .15s ease, border-color .2s ease, background .2s ease;
+      user-select:none;
+      isolation:isolate;
+    }
+    .heart:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.32); background: rgba(255,255,255,.09); }
+    .heart:active{ transform: translateY(1px); }
+
+    .heart .num{ position:absolute; top:10px; left:12px; font-weight: 800; font-size: 13px; color: rgba(255,255,255,.85); z-index:2; }
+    .heart .label{ position:absolute; bottom:10px; font-size: 12px; color: rgba(255,255,255,.78); z-index:2; letter-spacing:.2px; }
+
+    /* CSS heart icon */
+    .heart .icon{
+      width: 34px; height: 34px;
+      position:relative;
+      transform: rotate(-45deg);
+      z-index:2;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.28));
+      opacity:.95;
+      background: linear-gradient(135deg, rgba(255,77,166,.95), rgba(0,214,255,.85));
+      border-radius: 10px 0 10px 10px;
+    }
+    .heart .icon::before, .heart .icon::after{
+      content:"";
+      position:absolute;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,77,166,.95), rgba(0,214,255,.85));
+    }
+    .heart .icon::before{ top:-17px; left:0; }
+    .heart .icon::after{ left:17px; top:0; }
+
+    .heart.opened{ background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.35); }
+    .heart.opened .icon{ opacity:.25; transform: rotate(-45deg) scale(.95); }
+    .heart.opened .label{ opacity:.75; }
+
+    /* shimmer */
+    .heart::before{
+      content:"";
+      position:absolute; inset:-50%;
+      background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,.18), transparent 60%);
+      transform: rotate(12deg) translateX(-40%);
+      animation: shimmer 4.2s ease-in-out infinite;
+      z-index:1;
+      mix-blend-mode: overlay;
+      opacity:.7;
+    }
+    @keyframes shimmer{
+      0%{ transform: rotate(12deg) translateX(-60%); opacity:.0 }
+      35%{ opacity:.35 }
+      70%{ opacity:.25 }
+      100%{ transform: rotate(12deg) translateX(60%); opacity:.0 }
+    }
+
+    /* modal */
+    .modalBack{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center; justify-content:center;
+      padding:18px;
+      z-index:50;
+    }
+    .modalBack.show{ display:flex; }
+    .modal{
+      width: min(760px, 100%);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.20);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      backdrop-filter: blur(14px);
+      box-shadow: 0 24px 80px rgba(0,0,0,.55);
+      overflow:hidden;
+      transform: scale(.98);
+      animation: pop .18s ease forwards;
+    }
+    @keyframes pop{ to{ transform: scale(1);} }
+
+    .modalTop{
+      padding: 14px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.12);
+    }
+    .modalTop .title{ font-weight: 900; letter-spacing:.2px; }
+    .close{ border-radius: 12px; padding:8px 10px; font-weight: 900; }
+
+    .modalBody{ padding: 16px; display:grid; gap:10px; }
+    .big{ font-size: 18px; line-height:1.35; }
+    .small{ color: var(--muted); font-size: 13.5px; line-height:1.45; }
+    .signature{ margin-top:6px; font-size: 13px; color: rgba(255,255,255,.78); }
+
+    /* confetti canvas */
+    canvas#confetti{ position:fixed; inset:0; pointer-events:none; z-index:60; }
+
+    footer{ margin-top: 14px; color: rgba(255,255,255,.65); font-size: 12.5px; text-align:center; }
+
+    /* Puzzle/final overlay */
+    .finalBack{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.60);
+      display:none;
+      align-items:center; justify-content:center;
+      padding:18px;
+      z-index:80;
+    }
+    .finalBack.show{ display:flex; }
+    .final{
+      width:min(820px, 100%);
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.22);
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+      box-shadow: 0 28px 100px rgba(0,0,0,.6);
+      backdrop-filter: blur(16px);
+      overflow:hidden;
+    }
+    .finalTop{
+      padding:16px;
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.12);
+    }
+    .finalTop b{font-size:14px; letter-spacing:.2px}
+    .finalBody{
+      padding:18px 16px 20px;
+      display:grid;
+      gap:14px;
+      justify-items:center;
+      text-align:center;
+    }
+
+    .puzzleWrap{ width: 200px; height: 180px; position:relative; }
+    .bigHeart{
+      position:absolute; inset:0;
+      margin:auto;
+      width: 140px; height: 140px;
+      transform: rotate(-45deg);
+      filter: drop-shadow(0 18px 36px rgba(0,0,0,.35));
+      background: linear-gradient(135deg, rgba(255,77,166,.95), rgba(0,214,255,.9));
+      border-radius: 18px 0 18px 18px;
+      animation: heartPulse 1.2s ease-in-out infinite;
+    }
+    .bigHeart::before, .bigHeart::after{
+      content:"";
+      position:absolute;
+      width:140px; height:140px;
+      border-radius:50%;
+      background: linear-gradient(135deg, rgba(255,77,166,.95), rgba(0,214,255,.9));
+    }
+    .bigHeart::before{ top:-70px; left:0; }
+    .bigHeart::after{ top:0; left:70px; }
+    @keyframes heartPulse{
+      0%,100%{ transform: rotate(-45deg) scale(1); }
+      50%{ transform: rotate(-45deg) scale(1.06); }
+    }
+
+    /* puzzle pieces overlay (hide pieces as progress grows) */
+    .piece{
+      position:absolute;
+      width: 50px; height: 50px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.22);
+      background: rgba(10,12,20,.55);
+      backdrop-filter: blur(6px);
+      animation: pieceFloat 2.2s ease-in-out infinite;
+    }
+    @keyframes pieceFloat{ 0%,100%{transform: translateY(0)} 50%{transform: translateY(-6px)} }
+
+    .type{
+      font-weight: 900;
+      font-size: 20px;
+      line-height:1.35;
+      letter-spacing:.2px;
+    }
+    .type span{
+      background: linear-gradient(90deg, rgba(255,77,166,1), rgba(0,214,255,1), rgba(140,255,198,1));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .sub{
+      color: rgba(255,255,255,.78);
+      font-size: 14px;
+      line-height:1.5;
+      max-width: 640px;
+    }
+
+    /* Mini-game overlay */
+    .gameBack{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.60);
+      display:none;
+      z-index:90;
+    }
+    .gameBack.show{ display:block; }
+    .gameHud{
+      position:absolute;
+      top:16px; left:50%;
+      transform: translateX(-50%);
+      width:min(860px, 94vw);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      padding:12px 14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+      color: rgba(255,255,255,.9);
+      font-weight: 800;
+      font-size: 13px;
+      z-index:92;
+    }
+    .gameArea{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+      z-index:91;
+      cursor: crosshair;
+      touch-action: manipulation;
+    }
+    .dropHeart{
+      position:absolute;
+      width:34px; height:34px;
+      transform: rotate(-45deg);
+      background: linear-gradient(135deg, rgba(255,77,166,.95), rgba(0,214,255,.9));
+      border-radius: 10px 0 10px 10px;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+      animation: fall linear forwards;
+      user-select:none;
+    }
+    .dropHeart::before,.dropHeart::after{
+      content:"";
+      position:absolute;
+      width:34px;height:34px;border-radius:50%;
+      background: linear-gradient(135deg, rgba(255,77,166,.95), rgba(0,214,255,.9));
+    }
+    .dropHeart::before{top:-17px;left:0}
+    .dropHeart::after{top:0;left:17px}
+
+    @keyframes fall{
+      from{ transform: translateY(-60px) rotate(-45deg) scale(1); opacity:1; }
+      to{ transform: translateY(110vh) rotate(-45deg) scale(.95); opacity:.95; }
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform: translateX(-50%);
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(12px);
+      color: rgba(255,255,255,.9);
+      box-shadow: 0 16px 50px rgba(0,0,0,.35);
+      font-weight: 800;
+      font-size: 13px;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index:120;
+      text-align:center;
+      max-width: min(560px, 92vw);
+    }
+    .toast.show{ opacity:1; transform: translateX(-50%) translateY(-6px); }
+  </style>
+</head>
+<body>
+  <div class="aurora"></div>
+  <div class="snow"></div>
+  <canvas id="confetti"></canvas>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1>Даша, это маленький адвент для тебя 💖</h1>
+        <p>Нажимай сердечки — в каждом будет мини-сюрприз. Откроешь все — появится финальный “пазл-момент” ✨</p>
+      </div>
+      <div class="actions">
+        <button class="btn-primary" id="btnConfetti">🎉 Конфетти</button>
+        <button id="btnRandom">🎲 Случайное</button>
+        <button id="btnGame">🎮 Мини-игра</button>
+        <button id="btnReset">♻️ Сброс (если нужно)</button>
+      </div>
+    </header>
+
+    <section class="gridCard">
+      <div class="hint">
+        <div class="left">
+          <span class="pill" id="counter">Открыто: 0 / 24</span>
+          <span class="pill" id="progressPill">Пазл: 0%</span>
+          <span class="pill">Новогодний режим: ON ❄️</span>
+        </div>
+        <div class="pill">С любовью от Дани 💌</div>
+      </div>
+
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <footer>
+      Хочешь — поменяй тексты в массиве <b>surprises</b> внутри кода. Это самая простая настройка.
+    </footer>
+  </div>
+
+  <!-- Surprise modal -->
+  <div class="modalBack" id="modalBack" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modalTop">
+        <div class="title" id="modalTitle">Сюрприз</div>
+        <button class="close" id="btnClose">✕</button>
+      </div>
+      <div class="modalBody">
+        <div class="big" id="modalBig"></div>
+        <div class="small" id="modalSmall"></div>
+        <div class="signature" id="modalSign"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final puzzle overlay -->
+  <div class="finalBack" id="finalBack" aria-hidden="true">
+    <div class="final">
+      <div class="finalTop">
+        <b>Финал открыт 🎁</b>
+        <button class="close" id="btnFinalClose">✕</button>
+      </div>
+      <div class="finalBody">
+        <div class="puzzleWrap" aria-hidden="true">
+          <div class="bigHeart"></div>
+          <!-- 12 pieces (we will hide them based on progress) -->
+          <div class="piece" data-piece="1"  style="left:8px;  top:10px;"></div>
+          <div class="piece" data-piece="2"  style="left:70px; top:0px;"></div>
+          <div class="piece" data-piece="3"  style="left:140px;top:14px;"></div>
+          <div class="piece" data-piece="4"  style="left:10px; top:60px;"></div>
+          <div class="piece" data-piece="5"  style="left:78px; top:62px;"></div>
+          <div class="piece" data-piece="6"  style="left:148px;top:66px;"></div>
+          <div class="piece" data-piece="7"  style="left:18px; top:110px;"></div>
+          <div class="piece" data-piece="8"  style="left:88px; top:116px;"></div>
+          <div class="piece" data-piece="9"  style="left:152px;top:112px;"></div>
+          <div class="piece" data-piece="10" style="left:40px; top:136px;"></div>
+          <div class="piece" data-piece="11" style="left:104px;top:138px;"></div>
+          <div class="piece" data-piece="12" style="left:74px; top:92px;"></div>
+        </div>
+
+        <div class="type" id="finalType"></div>
+        <div class="sub" id="finalSub"></div>
+        <button class="btn-primary" id="btnFinalBoom">💥 Ещё конфетти</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game overlay -->
+  <div class="gameBack" id="gameBack" aria-hidden="true">
+    <div class="gameHud">
+      <div>🎮 Поймай сердечки: <span id="score">0</span></div>
+      <div>⏱️ Время: <span id="time">30</span>с</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn-primary" id="btnStartGame">▶️ Старт</button>
+        <button id="btnStopGame">⏹️ Стоп</button>
+        <button id="btnExitGame">✕ Выйти</button>
+      </div>
+    </div>
+    <div class="gameArea" id="gameArea"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ====== Настройки/контент ======
+    const girlName = "Даша";
+    const fromName = "Даня";
+
+    // 24 сюрприза (можешь редактировать)
+    const surprises = [
+      { big: "Ты — мой самый приятный «дом» ❤️", small: "Когда ты рядом, у меня внутри тихо и спокойно.", sign: "— " + fromName },
+      { big: "Обещание дня: больше обнимать 🤝", small: "Не когда удобно, а когда нужно тебе.", sign: "— " + fromName },
+      { big: "Мини-квест: улыбнись мне в ответ 😊", small: "Я считаю твою улыбку лучшей наградой.", sign: "— " + fromName },
+      { big: "Ты красивая. Не «иногда». А всегда.", small: "Я замечаю это каждый день.", sign: "— " + fromName },
+      { big: "Подарок: право на «я скучаю» 🥺", small: "Можно писать мне это хоть 10 раз в день.", sign: "— " + fromName },
+      { big: "С тобой обычные дни становятся уютнее 🕯️", small: "Ты реально делаешь атмосферу.", sign: "— " + fromName },
+      { big: "Секрет: ты меня вдохновляешь 🔥", small: "Мне хочется становиться лучше рядом с тобой.", sign: "— " + fromName },
+      { big: "Чек-ин: как ты, правда? 🤍", small: "Если устала — я рядом.", sign: "— " + fromName },
+      { big: "Твоя нежность — суперсила ✨", small: "Она делает мир мягче и добрее.", sign: "— " + fromName },
+      { big: "Договор: бережём друг друга 🧡", small: "Не «кто прав», а «как нам лучше вместе».", sign: "— " + fromName },
+      { big: "Новогоднее: пусть у нас будет тёплый год 🎄", small: "С маленькими традициями и смехом.", sign: "— " + fromName },
+      { big: "Подарок: 1 желание ⭐", small: "Скажи — и я постараюсь сделать.", sign: "— " + fromName },
+      { big: "Ты — мой «вау» момент каждый день 💫", small: "Даже когда ты думаешь, что «обычная».", sign: "— " + fromName },
+      { big: "Я горжусь тобой 🏅", small: "За силу, доброту и то, как ты держишься.", sign: "— " + fromName },
+      { big: "Твоё настроение важно мне 💗", small: "Не надо быть «удобной». Будь настоящей.", sign: "— " + fromName },
+      { big: "Купон на обнимашку 30 секунд 🤗", small: "Активируется внезапно и без предупреждения.", sign: "— " + fromName },
+      { big: "Маленькая магия: ты мне снишься ☁️", small: "И это всегда хорошие сны.", sign: "— " + fromName },
+      { big: "Спасибо, что ты есть 🥹", small: "Звучит просто, но это очень серьёзно.", sign: "— " + fromName },
+      { big: "Если ты переживаешь — скажи 🫶", small: "Я не спорю с чувствами. Я рядом.", sign: "— " + fromName },
+      { big: "Сегодня ты заслужила отдых 🕯️", small: "Я официально разрешаю тебе ничего не доказывать.", sign: "— " + fromName },
+      { big: "Ты — самая красивая моя история 📖", small: "И я хочу писать её аккуратно и с любовью.", sign: "— " + fromName },
+      { big: "Я выбираю тебя снова и снова 💍", small: "Не потому что надо. А потому что хочу.", sign: "— " + fromName },
+      { big: "Сюрприз: ты мой любимый человек 💘", small: "И я очень ценю тебя.", sign: "— " + fromName },
+      { big: "Финальная подсказка: открой всё 😘", small: "Там будет главный момент.", sign: "— " + fromName },
+    ];
+
+    // ====== Утилиты ======
+    const $ = (id) => document.getElementById(id);
+    const clamp = (n,a,b)=>Math.max(a,Math.min(b,n));
+
+    function toast(msg){
+      const t = $("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(toast._tm);
+      toast._tm = setTimeout(()=>t.classList.remove("show"), 1800);
+    }
+
+    // ====== Advent UI ======
+    const grid = $("grid");
+    const modalBack = $("modalBack");
+    const modalTitle = $("modalTitle");
+    const modalBig = $("modalBig");
+    const modalSmall = $("modalSmall");
+    const modalSign = $("modalSign");
+    const counter = $("counter");
+    const progressPill = $("progressPill");
+
+    const finalBack = $("finalBack");
+    const finalType = $("finalType");
+    const finalSub = $("finalSub");
+
+    const OPEN_KEY = "dasha_advent_opened_v2";
+    let opened = new Set(JSON.parse(localStorage.getItem(OPEN_KEY) || "[]"));
+
+    function saveOpened(){
+      localStorage.setItem(OPEN_KEY, JSON.stringify([...opened]));
+    }
+
+    function updateCounter(){
+      counter.textContent = `Открыто: ${opened.size} / 24`;
+      const pct = Math.round((opened.size/24)*100);
+      progressPill.textContent = `Пазл: ${pct}%`;
+      updatePuzzlePieces(pct);
+      if(opened.size === 24){
+        showFinalIfReady();
+      }
+    }
+
+    function updatePuzzlePieces(pct){
+      // 12 pieces: hide gradually with progress
+      const pieces = document.querySelectorAll(".piece");
+      const hiddenCount = Math.round((pct/100) * pieces.length);
+      pieces.forEach((p, idx)=>{
+        p.style.display = (idx < hiddenCount) ? "none" : "block";
+      });
+    }
+
+    function openModal(day){
+      const s = surprises[day-1];
+      modalTitle.textContent = `Сердечко №${day} для ${girlName}`;
+      modalBig.textContent = s.big;
+      modalSmall.textContent = s.small;
+      modalSign.textContent = s.sign;
+
+      modalBack.classList.add("show");
+      modalBack.setAttribute("aria-hidden","false");
+
+      // отметить как открыто
+      if(!opened.has(day)){
+        opened.add(day);
+        saveOpened();
+
+        const tile = document.querySelector(`[data-day="${day}"]`);
+        if(tile){
+          tile.classList.add("opened");
+          const lab = tile.querySelector(".label");
+          if(lab) lab.textContent = "Открыто ✨";
+        }
+
+        updateCounter();
+        burstConfetti(160);
+      }
+    }
+
+    function closeModal(){
+      modalBack.classList.remove("show");
+      modalBack.setAttribute("aria-hidden","true");
+    }
+
+    // build grid
+    function buildGrid(){
+      grid.innerHTML = "";
+      for(let i=1;i<=24;i++){
+        const card = document.createElement("div");
+        card.className = "heart" + (opened.has(i) ? " opened" : "");
+        card.dataset.day = String(i);
+        card.innerHTML = `
+          <div class="num">${i}</div>
+          <div class="icon" aria-hidden="true"></div>
+          <div class="label">${opened.has(i) ? "Открыто ✨" : "Нажми 💌"}</div>
+        `;
+        card.addEventListener("click", () => openModal(i));
+        grid.appendChild(card);
+      }
+    }
+    buildGrid();
+    updateCounter();
+
+    // close handlers
+    $("btnClose").addEventListener("click", closeModal);
+    modalBack.addEventListener("click", (e)=>{ if(e.target === modalBack) closeModal(); });
+    window.addEventListener("keydown", (e)=>{ if(e.key === "Escape") { closeModal(); closeFinal(); closeGame(); } });
+
+    // random open
+    $("btnRandom").addEventListener("click", ()=>{
+      const closed = [];
+      for(let i=1;i<=24;i++) if(!opened.has(i)) closed.push(i);
+      const pick = closed.length ? closed[Math.floor(Math.random()*closed.length)] : (1+Math.floor(Math.random()*24));
+      openModal(pick);
+    });
+
+    // reset (optional)
+    $("btnReset").addEventListener("click", ()=>{
+      if(confirm("Сбросить все открытия? (Это только для теста)")){
+        opened = new Set();
+        saveOpened();
+        buildGrid();
+        updateCounter();
+        toast("Сброшено ✅");
+      }
+    });
+
+    // ====== Final puzzle ======
+    let finalShown = false;
+
+    function showFinalIfReady(){
+      if(finalShown) return;
+      finalShown = true;
+      // Показать финал после закрытия модалки (чтобы было красиво)
+      setTimeout(()=>{
+        closeModal();
+        openFinal();
+      }, 250);
+    }
+
+    function openFinal(){
+      finalBack.classList.add("show");
+      finalBack.setAttribute("aria-hidden","false");
+      burstConfetti(260);
+
+      const lines = [
+        `Даша, <span>я правда тебя люблю</span> 💖`,
+        `И я хочу, чтобы у нас было много тёплых дней…`,
+        `…где ты спокойна, уверена и чувствуешь себя любимой.`,
+      ];
+      typeFinal(lines.join("<br>"));
+
+      finalSub.textContent =
+        "Если ты улыбаешься сейчас — значит, всё получилось 😊 С Новым годом и с нами ✨";
+    }
+
+    function closeFinal(){
+      finalBack.classList.remove("show");
+      finalBack.setAttribute("aria-hidden","true");
+    }
+
+    $("btnFinalClose").addEventListener("click", closeFinal);
+    $("btnFinalBoom").addEventListener("click", ()=> burstConfetti(320));
+    finalBack.addEventListener("click", (e)=>{ if(e.target === finalBack) closeFinal(); });
+
+    function typeFinal(html){
+      finalType.innerHTML = "";
+      // простой эффект "печатания": по символам в текстовой версии
+      const tmp = document.createElement("div");
+      tmp.innerHTML = html;
+      const text = tmp.innerHTML; // оставим теги <br> и <span>
+      // печатаем по кускам, чтобы не ломать теги: сделаем по строкам
+      const parts = html.split("<br>");
+      let i = 0;
+
+      function step(){
+        if(i >= parts.length) return;
+        const line = parts[i];
+        let j = 0;
+        const target = document.createElement("div");
+        finalType.appendChild(target);
+
+        const interval = setInterval(()=>{
+          j++;
+          target.innerHTML = line.slice(0, j);
+          if(j >= line.length){
+            clearInterval(interval);
+            i++;
+            setTimeout(step, 250);
+          }
+        }, 14);
+      }
+      step();
+    }
+
+    // ====== Confetti (canvas) ======
+    const canvas = $("confetti");
+    const ctx = canvas.getContext("2d");
+    let W,H,confettis=[],raf=null;
+
+    function resize(){
+      W = canvas.width = window.innerWidth * devicePixelRatio;
+      H = canvas.height = window.innerHeight * devicePixelRatio;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    function rand(a,b){ return a + Math.random()*(b-a); }
+
+    function addConfetti(n=120){
+      for(let i=0;i<n;i++){
+        confettis.push({
+          x: rand(0, W),
+          y: rand(-H*0.2, 0),
+          r: rand(2, 5) * devicePixelRatio,
+          vx: rand(-1.2, 1.2) * devicePixelRatio,
+          vy: rand(2.2, 5.0) * devicePixelRatio,
+          rot: rand(0, Math.PI*2),
+          vr: rand(-0.12, 0.12),
+          life: rand(70, 130)
+        });
+      }
+      if(!raf) animateConfetti();
+    }
+
+    function animateConfetti(){
+      raf = requestAnimationFrame(animateConfetti);
+      ctx.clearRect(0,0,W,H);
+      for(let i=confettis.length-1;i>=0;i--){
+        const p = confettis[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vr;
+        p.vy += 0.03 * devicePixelRatio;
+        p.life -= 1;
+
+        const w = p.r*2.2, h = p.r*1.2;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+
+        const g = ctx.createLinearGradient(-w, -h, w, h);
+        g.addColorStop(0, "rgba(255,77,166,0.95)");
+        g.addColorStop(0.5, "rgba(0,214,255,0.9)");
+        g.addColorStop(1, "rgba(140,255,198,0.85)");
+        ctx.fillStyle = g;
+
+        roundRect(ctx, -w/2, -h/2, w, h, Math.min(6, p.r));
+        ctx.fill();
+        ctx.restore();
+
+        if(p.y > H + 60 || p.life <= 0) confettis.splice(i,1);
+      }
+      if(confettis.length === 0){
+        cancelAnimationFrame(raf);
+        raf = null;
+      }
+    }
+
+    function roundRect(c, x, y, w, h, r){
+      c.beginPath();
+      c.moveTo(x+r, y);
+      c.arcTo(x+w, y, x+w, y+h, r);
+      c.arcTo(x+w, y+h, x, y+h, r);
+      c.arcTo(x, y+h, x, y, r);
+      c.arcTo(x, y, x+w, y, r);
+      c.closePath();
+    }
+
+    function burstConfetti(amount=160){ addConfetti(amount); }
+
+    $("btnConfetti").addEventListener("click", ()=> burstConfetti(240));
+    setTimeout(()=>burstConfetti(140), 650);
+
+    // ====== Mini-game: catch hearts ======
+    const gameBack = $("gameBack");
+    const gameArea = $("gameArea");
+    const scoreEl = $("score");
+    const timeEl = $("time");
+    let score = 0;
+    let timeLeft = 30;
+    let spawnTimer = null;
+    let tickTimer = null;
+    let running = false;
+    let bonusShown = false;
+
+    $("btnGame").addEventListener("click", openGame);
+    $("btnExitGame").addEventListener("click", closeGame);
+    $("btnStartGame").addEventListener("click", startGame);
+    $("btnStopGame").addEventListener("click", stopGame);
+
+    gameBack.addEventListener("click", (e)=>{
+      // клик по затемнению не закрывает, чтобы не бесило — только кнопка "Выйти"
+      // (можно сделать закрытие по клику вне HUD, если хочешь)
+    });
+
+    function openGame(){
+      gameBack.classList.add("show");
+      gameBack.setAttribute("aria-hidden","false");
+      toast("Поймай максимум сердечек за 30 секунд 💘");
+      resetGame();
+    }
+    function closeGame(){
+      stopGame();
+      gameBack.classList.remove("show");
+      gameBack.setAttribute("aria-hidden","true");
+      clearHearts();
+    }
+
+    function resetGame(){
+      stopGame();
+      score = 0;
+      timeLeft = 30;
+      bonusShown = false;
+      scoreEl.textContent = score;
+      timeEl.textContent = timeLeft;
+      clearHearts();
+    }
+
+    function startGame(){
+      if(running) return;
+      running = true;
+      clearHearts();
+      score = 0;
+      timeLeft = 30;
+      bonusShown = false;
+      scoreEl.textContent = score;
+      timeEl.textContent = timeLeft;
+
+      spawnTimer = setInterval(spawnHeart, 380);
+      tickTimer = setInterval(()=>{
+        timeLeft--;
+        timeEl.textContent = timeLeft;
+        if(timeLeft <= 0){
+          endGame();
+        }
+      }, 1000);
+
+      toast("Старт! Лови сердечки 😈");
+    }
+
+    function stopGame(){
+      running = false;
+      if(spawnTimer){ clearInterval(spawnTimer); spawnTimer = null; }
+      if(tickTimer){ clearInterval(tickTimer); tickTimer = null; }
+    }
+
+    function endGame(){
+      stopGame();
+      burstConfetti(180);
+      if(score >= 25){
+        toast(`ВАУ. ${score} ❤️ — Даша официально в топ-1 😌`);
+      } else {
+        toast(`Конец! Ты поймал ${score} ❤️ (можно повторить)`);
+      }
+      // маленький бонус, если хорошо сыграл
+      if(score >= 18 && !bonusShown){
+        bonusShown = true;
+        setTimeout(()=>{
+          alert("Бонус-сообщение:\n\nДаша, ты мой самый любимый человек. И я очень хочу делать тебя счастливой 💖");
+        }, 350);
+      }
+    }
+
+    function clearHearts(){
+      gameArea.querySelectorAll(".dropHeart").forEach(el=>el.remove());
+    }
+
+    function spawnHeart(){
+      if(!running) return;
+      const h = document.createElement("div");
+      h.className = "dropHeart";
+      const x = Math.random() * (window.innerWidth - 50);
+      const dur = 2.2 + Math.random() * 1.4; // 2.2-3.6s
+      h.style.left = x + "px";
+      h.style.animationDuration = dur + "s";
+
+      // slight size variety
+      const s = 0.85 + Math.random()*0.55;
+      h.style.transform = `rotate(-45deg) scale(${s})`;
+
+      h.addEventListener("pointerdown", (e)=>{
+        e.preventDefault();
+        e.stopPropagation();
+        h.remove();
+        score++;
+        scoreEl.textContent = score;
+
+        // микробуст за серии
+        if(score % 7 === 0){
+          burstConfetti(120);
+          toast("Серия! + настроение 😎");
+        }
+      });
+
+      h.addEventListener("animationend", ()=>{
+        // если не поймал — просто убираем
+        h.remove();
+      });
+
+      gameArea.appendChild(h);
+    }
+
+    // ====== Если уже всё открыто при заходе ======
+    if(opened.size === 24){
+      // сразу подготовим пазл
+      updateCounter();
+      // финал не показываем без желания, но можно:
+      // openFinal();
+    }
+  </script>
+</body>
+</html>
